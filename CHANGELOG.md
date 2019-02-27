@@ -1,5 +1,9 @@
 # Changelog
 
+## [7.4.0] - 2019-02-25
+
+- [Switch from compile to implementation in gradle file](https://github.com/tipsi/tipsi-stripe/pull/438)
+
 ## [7.3.0] - 2019-02-15
 - [Call reject directly in createSourceWithParams](https://github.com/tipsi/tipsi-stripe/pull/433)
 
@@ -28,16 +32,16 @@
 
 ## [5.5.1] - 2018-08-10
 ### Added
-- `paymentRequestWithAndroidPay` now supports _boolean_ `phone_number_required` field to ask a user for phone number  
+- `paymentRequestWithAndroidPay` now supports _boolean_ `phone_number_required` field to ask a user for phone number
 
 ## [5.5.0] - 2018-08-08
 ### Added
-- `tipsi-stripe` now respects [project-level GMS version](https://github.com/tipsi/tipsi-stripe/pull/350) on Android 
+- `tipsi-stripe` now respects [project-level GMS version](https://github.com/tipsi/tipsi-stripe/pull/350) on Android
 
 ## [5.4.0] - 2018-07-27
-From this release we are starting unify our Public API.  
-There was a difference between iOS and Android API, now we've created new methods that currently work as a proxy.  
-So, we have marked deprecated methods inside `src/Stripe.js`, and yes there is no more Stripe.${platform}.js files.  
+From this release we are starting unify our Public API.
+There was a difference between iOS and Android API, now we've created new methods that currently work as a proxy.
+So, we have marked deprecated methods inside `src/Stripe.js`, and yes there is no more Stripe.${platform}.js files.
 But, you won't see any changes. Breaking changes will be introduced in version 6.
 
 ### DEPRECATED METHODS
@@ -48,8 +52,8 @@ But, you won't see any changes. Breaking changes will be introduced in version 6
 - `cancelApplePayRequest` => `cancelNativePayRequest` (Android implementation doesn't exist)
 - `openApplePaySetup` => `openNativePaySetup` (Android implementation doesn't exist)
 
-As you can see all platform specific methods are now unified.  
-We called them `Native Methods` because `Google/Android Pay` and `ApplePay` are native payments systems unlike Credit Cards.  
+As you can see all platform specific methods are now unified.
+We called them `Native Methods` because `Google/Android Pay` and `ApplePay` are native payments systems unlike Credit Cards.
 
 ### Changed
 - `Stripe.ios.js` and `Stripe.android.js` => `Stripe.js`
@@ -87,7 +91,7 @@ We called them `Native Methods` because `Google/Android Pay` and `ApplePay` are 
 - Fixed an error with PropTypes
 
 ## [5.2.0] - 2018-04-04
-### Added 
+### Added
 - Method `stripe.canMakeAndroidPayPayments()` checks if gpay supported and user has existing payment method
 
 ### Changed
@@ -101,18 +105,18 @@ We called them `Native Methods` because `Google/Android Pay` and `ApplePay` are 
 ### Breaking changes:
 
 #### 1) Initialization
- 
-before 5.0.0: 
+
+before 5.0.0:
 
 ```javascript
 // somewhere in the app start section
-  
+
 stripe.init({
   merchantId: '<MERCHANT_ID>',
   publishableKey: '<PUB_KEY>',
-  androidPayMode: 'test',      
+  androidPayMode: 'test',
 })
-  
+
 stripe.paymentRequestWithAndroidPay(paymentOptions)
 ```
 
@@ -122,13 +126,13 @@ after 5.0.0:
 
 ```javascript
 // same as above except used method name
-  
+
 stripe.setOptions({
   merchantId: '<MERCHANT_ID>',
   publishableKey: '<PUB_KEY>',
-  androidPayMode: 'test',      
+  androidPayMode: 'test',
 })
-  
+
 stripe.paymentRequestWithAndroidPay(paymentOptions)
 ```
 
@@ -139,19 +143,19 @@ stripe.paymentRequestWithAndroidPay(paymentOptions)
 // stripe.deviceSupportsAndroidPay()
 // stripe.paymentRequestWithAndroidPay()
 // or runtime exception will be thrown
-  
+
 stripe.setOptions({
-  androidPayMode: 'test',      
+  androidPayMode: 'test',
 })
-  
+
 // somewhere else later i.e. near store cart code
 stripe.setOptions({
   publishableKey: '<PUB_KEY>',
 })
-  
+
 // make sure you've set *all* needed options before, both androidPayMode and publishableKey
 // or exception will be thrown
-  
+
 stripe.paymentRequestWithAndroidPay(paymentOptions)
 ```
 
@@ -161,7 +165,7 @@ before 5.0.0:
 // you couldn't before set billing_address_required, shipping_address_required options
 // to require user filling that data. shipping_address_required was true by default
 // and such data was missing in the method response (useless user input)
-  
+
 stripe.paymentRequestWithAndroidPay(paymentOptions)
 ```
 
@@ -171,12 +175,12 @@ after 5.0.0:
 // explicitly set required input from user by
 // setting billing_address_required, shipping_address_required props,
 // omitted values are false by default
-  
+
 const addressRequirements = {
   billing_address_required: false,
   shipping_address_required: true,
 }
-  
+
 stripe.paymentRequestWithAndroidPay({
   paymentOptions,
   ...addressRequirements,
