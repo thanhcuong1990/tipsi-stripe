@@ -15,7 +15,7 @@ Run `react-native link tipsi-stripe` so your project is linked against your Xcod
 1. Open your project in Xcode, right click on Libraries and click `Add Files to "Your Project Name"`.
 2. Look under `node_modules/tipsi-stripe/ios` and add `TPSStripe.xcodeproj`.
 3. Add `libTPSStripe.a` to `Build Phases` → `Link Binary With Libraries`.
-4. Click on `TPSStripe.xcodeproj` in Libraries and go the `Build Settings` tab.  
+4. Click on `TPSStripe.xcodeproj` in Libraries and go the `Build Settings` tab.
    Double click the text to the right of `Header Search Paths` and verify that it has
    * `$(SRCROOT)/../../react-native/React`
    * `${SRCROOT}/../../../ios/Pods/Headers/Public`
@@ -72,6 +72,12 @@ protected List <ReactPackage> getPackages() {
   );
 }
 ```
+
+If enabling minification in your `app/build.gradle` file, you must also add the following line to `proguard-rules.pro`:
+```diff
++ -keep class com.stripe.android.** { *; }
+```
+You can check [Stripe Android SDK](https://github.com/stripe/stripe-android#installation) for detail.
 
 **Ensure that you have Google Play Services installed.**
 
