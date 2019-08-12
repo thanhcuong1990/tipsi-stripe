@@ -4,6 +4,8 @@ title: Linking
 sidebar_label: Linking
 ---
 
+> **Note** Linking on Windows system currently isn't working. Feel free to fix it and remove this warning from docs
+
 ## Automatically
 
 Run `react-native link tipsi-stripe` so your project is linked against your Xcode project and all CocoaPods dependencies are installed.
@@ -15,7 +17,7 @@ Run `react-native link tipsi-stripe` so your project is linked against your Xcod
 1. Open your project in Xcode, right click on Libraries and click `Add Files to "Your Project Name"`.
 2. Look under `node_modules/tipsi-stripe/ios` and add `TPSStripe.xcodeproj`.
 3. Add `libTPSStripe.a` to `Build Phases` → `Link Binary With Libraries`.
-4. Click on `TPSStripe.xcodeproj` in Libraries and go the `Build Settings` tab.
+4. Click on `TPSStripe.xcodeproj` in Libraries and go the `Build Settings` tab.  
    Double click the text to the right of `Header Search Paths` and verify that it has
    * `$(SRCROOT)/../../react-native/React`
    * `${SRCROOT}/../../../ios/Pods/Headers/Public`
