@@ -33,10 +33,10 @@
     "react-native": ">=0.40"
   },
   "devDependencies": {
-    "eslint": "4.19.1",
-    "eslint-config-tipsi": "2.0.3",
-    "esm": "3.0.28",
-    "prop-types": "15.6.1",
-    "tape": "4.9.0"
+    "eslint": "^6.8.0",
+    "eslint-config-tipsi": "^2.2.0",
+    "esm": "^3.2.25",
+    "prop-types": "^15.7.2",
+    "tape": "^4.13.2"
   }
 }
