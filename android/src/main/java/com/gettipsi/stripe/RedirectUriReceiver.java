@@ -18,8 +18,12 @@ public class RedirectUriReceiver extends Activity {
       sendResult(RESULT_CANCELED);
     }
 
-    StripeModule.getInstance().processRedirect(getIntent().getData());
-    sendResult(RESULT_OK);
+    try {
+      StripeModule.getInstance().processRedirect(getIntent().getData());
+      sendResult(RESULT_OK);
+    } catch (NullPointerException error) {
+      sendResult(RESULT_CANCELED);
+    }
   }
 
   private void sendResult(int resultCode) {
