@@ -23,7 +23,7 @@ const errorCodes = {
   },
   sourceStatusFailed: {
     errorCode: 'sourceStatusFailed',
-    description: 'The source status is unknown. You shouldn\'t encounter this value.',
+    description: "The source status is unknown. You shouldn't encounter this value.",
   },
   sourceStatusUnknown: {
     errorCode: 'sourceStatusUnknown',
@@ -46,7 +46,7 @@ const errorCodes = {
   },
   noAmount: {
     errorCode: 'noAmount',
-    description: 'Amount should be greater than 0',
+    description: 'Amount should not be less than zero',
   },
   parseResponse: {
     errorCode: 'parseResponse',
@@ -105,6 +105,13 @@ const errorCodes = {
   },
   authentication: {
     errorCode: 'authentication',
+  },
+  /**
+   * Failures to authenticate will get this error
+   * @see: (confirm/authenticate)(Setup/Payment)Intent
+   */
+  authenticationFailed: {
+    errorCode: 'authenticationFailed',
   },
   permission: {
     errorCode: 'permission',

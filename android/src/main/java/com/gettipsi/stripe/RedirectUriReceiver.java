@@ -2,7 +2,7 @@ package com.gettipsi.stripe;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
@@ -18,12 +18,8 @@ public class RedirectUriReceiver extends Activity {
       sendResult(RESULT_CANCELED);
     }
 
-    try {
-      StripeModule.getInstance().processRedirect(getIntent().getData());
-      sendResult(RESULT_OK);
-    } catch (NullPointerException error) {
-      sendResult(RESULT_CANCELED);
-    }
+    StripeModule.getInstance().processRedirect(getIntent().getData());
+    sendResult(RESULT_OK);
   }
 
   private void sendResult(int resultCode) {

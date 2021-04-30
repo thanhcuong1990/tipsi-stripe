@@ -9,14 +9,61 @@ import {
   Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import StyleSheetPropType from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedStyleSheetPropType'
-import ViewStylePropTypes from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedViewStylePropTypes'
-import TextInputState from 'react-native/Libraries/Components/TextInput/TextInputState'
+import { TextInput } from 'react-native';
 
-const FieldStylePropType = {
-  ...ViewStylePropTypes,
+const { State: TextInputState } = TextInput;
+
+const FieldStylePropType = PropTypes.shape({
+  ...ViewPropTypes.style,
   color: PropTypes.string,
-}
+})
+
+/**
+ * @typedef {Object} PaymentCardTextFieldNativeEventParams
+ * @property {string} number -- card number as a string
+ * @property {number} expMonth
+ * @property {number} expYear
+ * @property {string} cvc
+ */
+
+/**
+ * @typedef {Object} PaymentCardTextFieldNativeEvent
+ * @property {boolean}  valid
+ * @property {PaymentCardTextFieldNativeEventParams} params
+ */
+
+/**
+ * @callback OnChangeCallback
+ * @param {PaymentCardTextFieldNativeEvent} params
+ */
+
+/**
+ * // TODO: Get a more precise type here, not sure how to JSDoc react-native Style Types
+ * @typedef {Object} PaymentComponentTextFieldStyleProp
+ */
+
+/**
+ * A Component that collects the CardNumber, ExpirationDate, and CVC all in one.
+ * @typedef {Object} PaymentCardTextFieldProps
+ *
+ * @property {string} expirationPlaceholder
+ * @property {string} numberPlaceholder
+ * @property {string} cvcPlaceholder
+ * @property {boolean} disabled
+ * @property {OnChangeCallback} onChange
+ * @property {PaymentComponentTextFieldStyleProp} style
+ *
+ * @property {string} cursorColor iOS-only!
+ * @property {string} textErrorColor iOS-only!
+ * @property {string} placeholderColor iOS-only!
+ * @property {"default"|"light"|"dark"} keyboardAppearance iOS-only!
+ *
+ * @property {boolean} setEnabled Android-only!
+ * @property {string} backgroundColor Android-only!
+ * @property {string} cardNumber Android-only!
+ * @property {string} expDate Android-only!
+ * @property {string} securityCode Android-only!
+ */
 
 const NativePaymentCardTextField = requireNativeComponent('TPSCardField', PaymentCardTextField, {
   nativeOnly: {
@@ -35,10 +82,13 @@ const NativePaymentCardTextField = requireNativeComponent('TPSCardField', Paymen
   },
 })
 
+/**
+ * @type {import('react').ComponentClass<PaymentCardTextFieldProps>}
+ */
 export default class PaymentCardTextField extends Component {
   static propTypes = {
     ...ViewPropTypes,
-    style: StyleSheetPropType(FieldStylePropType), // eslint-disable-line new-cap
+    style: FieldStylePropType,
 
     // Common
     expirationPlaceholder: PropTypes.string,
@@ -82,12 +132,7 @@ export default class PaymentCardTextField extends Component {
     }
   }
 
-  isFocused = () => (
-    (TextInputState.currentlyFocusedInput
-      ? TextInputState.currentlyFocusedInput()
-      : TextInputState.currentlyFocusedField()
-    ) === findNodeHandle(this.cardTextFieldRef)
-  )
+  isFocused = () => TextInputState.currentlyFocusedField() === findNodeHandle(this.cardTextFieldRef)
 
   focus = () => {
     TextInputState.focusTextInput(findNodeHandle(this.cardTextFieldRef))
@@ -109,7 +154,8 @@ export default class PaymentCardTextField extends Component {
     this.params = nativeEvent.params
 
     if (onChange) {
-      onChange(event)
+      // Send the intended parameters back into JS
+      onChange({ ...nativeEvent })
     }
 
     if (onParamsChange) {
@@ -177,7 +223,8 @@ export default class PaymentCardTextField extends Component {
           onPress={this.handlePress}
           accessible={rest.accessible}
           accessibilityLabel={rest.accessibilityLabel}
-          accessibilityTraits={rest.accessibilityTraits}>
+          accessibilityTraits={rest.accessibilityTraits}
+        >
           <NativePaymentCardTextField
             ref={this.setCardTextFieldRef}
             style={[styles.field, fieldStyles]}
@@ -194,13 +241,11 @@ export default class PaymentCardTextField extends Component {
             expirationPlaceholder={expirationPlaceholder}
             cvcPlaceholder={cvcPlaceholder}
             onChange={this.handleChange}
-
             // iOS only
             cursorColor={cursorColor}
             textErrorColor={textErrorColor}
             placeholderColor={placeholderColor}
             keyboardAppearance={keyboardAppearance}
-
             // Android only
             cardNumber={cardNumber}
             expDate={expDate}
