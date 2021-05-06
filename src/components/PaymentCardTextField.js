@@ -143,7 +143,7 @@ export default class PaymentCardTextField extends Component {
   }
 
   handlePress = () => {
-    this.focus()
+    // this.focus()
   }
 
   handleChange = (event) => {
