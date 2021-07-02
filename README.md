@@ -1,6 +1,12 @@
 # tipsi-stripe
 
-> ℹ️ Interested in future React Native libraries for the Stripe API? Fill our this interest form to keep up to date: [Stripe React Native Interest Form](https://app.smartsheet.com/b/form/b1a1053eaac7496eb0ae7892ebd68973)
+This library isn't actively maintained now. Please, consider usage of Stripe's official library:
+
+https://github.com/stripe/stripe-react-native
+
+
+If for some reason you cannot migrate to it now. And you can offer with testing new beta versions, please reach me in [discord](https://discord.gg/vmBxnBw) (name: cybergrind#4625). Just PM with github account name + platforms you can check will be enough.
+I will ping you when we have something to check.
 
 
 [![npm version](https://img.shields.io/npm/v/tipsi-stripe.svg?style=flat-square)](https://www.npmjs.com/package/tipsi-stripe)
